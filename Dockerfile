@@ -6,11 +6,10 @@ WORKDIR /app
 COPY . .
 
 # Build each project using Maven
-RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/config_server && mvn clean package -DskipTests
-RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/api_gateway && mvn clean package -DskipTests
-RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/discovery_server && mvn clean package -DskipTests
-RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/user_microservice && mvn clean package -DskipTests
-
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/config_server && \ mvn clean package -DskipTests
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/api_gateway && \ mvn clean package -DskipTests
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/discovery_server && \ mvn clean package -DskipTests
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/user_microservice && \ mvn clean package -DskipTests
 # Runtime stage
 FROM openjdk:17-slim AS runtime
 
