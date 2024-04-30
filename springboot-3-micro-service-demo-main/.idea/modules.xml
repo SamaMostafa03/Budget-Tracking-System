@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/config-server/config-server.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/config-server/config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/discovery/discovery.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/discovery/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/gateway/gateway.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/school/school.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/school/school.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/springboot-3-micro-service-demo-main.iml" filepath="$PROJECT_DIR$/.idea/springboot-3-micro-service-demo-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/student/student.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/student/student.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/transaction/transaction.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/transaction/transaction.iml" />
+    </modules>
+  </component>
+</project>
