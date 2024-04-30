@@ -2,10 +2,14 @@ FROM maven:3.8.3-openjdk-17 AS build
 
 WORKDIR /app
 
-COPY .. .
+# Copy the entire project directory into the Docker build context
+COPY . .
 
-# Build the projects using Maven
-RUN mvn clean package -DskipTests
+# Build each project using Maven
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/config_server && mvn clean package -DskipTests
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/api_gateway && mvn clean package -DskipTests
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/discovery_server && mvn clean package -DskipTests
+RUN cd springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/user_microservice && mvn clean package -DskipTests
 
 # Runtime stage
 FROM openjdk:17-slim AS runtime
