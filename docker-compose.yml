@@ -4,7 +4,7 @@ services:
   config-server:
     build:
       context:   config-server
-      dockerfile: ./Dockerfile
+      dockerfile: ./config-server/Dockerfile
     ports:
       - 8888:8080
     networks:
@@ -12,7 +12,7 @@ services:
   discovery:
     build:
       context:   discovery
-      dockerfile: ./Dockerfile
+      dockerfile: ./discovery/Dockerfile
     ports:
       - 8761:8080
     networks:
@@ -22,7 +22,7 @@ services:
   gateway:
     build:
       context:   gateway
-      dockerfile: ./Dockerfile
+      dockerfile: ./gateway/Dockerfile
     ports:
       - 8222:8080
     networks:
@@ -33,7 +33,7 @@ services:
   transaction:
     build:
       context:   transaction
-      dockerfile: ./Dockerfile
+      dockerfile: ./transaction/Dockerfile
     ports:
       - 8091:8080
     networks:
