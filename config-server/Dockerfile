@@ -1,12 +1,13 @@
 FROM maven:3.8.3-openjdk-17 AS build
 
+WORKDIR /app
+
 #copy all files from the current directory into the /usr/src/app directory within the Docker container
 COPY . .
 
-WORKDIR /app
 
 # Build each project using Maven
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 # Runtime stage
 FROM openjdk:17-slim AS runtime
