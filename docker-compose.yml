@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  config-server:
+    build:
+      context:   config-server
+      dockerfile: ./Dockerfile
+    ports:
+      - 8888:8080
+    networks:
+      - challenge-network
+  discovery:
+    build:
+      context:   discovery
+      dockerfile: ./Dockerfile
+    ports:
+      - 8761:8080
+    networks:
+      - challenge-network
+    depends_on:
+      - config-server
+  gateway:
+    build:
+      context:   gateway
+      dockerfile: ./Dockerfile
+    ports:
+      - 8222:8080
+    networks:
+      - challenge-network
+    depends_on:
+      - config-server
+      - discovery
+  transaction:
+    build:
+      context:   transaction
+      dockerfile: ./Dockerfile
+    ports:
+      - 8091:8080
+    networks:
+      - challenge-network
+    depends_on:
+      - config-server
+      - discovery
+      - gateway
+networks:
+  challenge-network:
+    driver: bridge
