@@ -24,6 +24,33 @@ COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
 # Build the discovery service
 RUN mvn clean package
 
+# Stage 2: Build gateway
+FROM maven:3.8.3-openjdk-17 AS build_gateway
+WORKDIR /usr/src/app/gateway
+COPY ./gateway .
+RUN mvn dependency:go-offline
+# Copying the entire application code
+COPY ./gateway .
+
+# Copy the built artifacts from the config server
+COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+
+# Build the discovery service
+RUN mvn clean package
+
+# Stage 2: Build transaction
+FROM maven:3.8.3-openjdk-17 AS build_transaction
+WORKDIR /usr/src/app/transaction
+COPY ./transaction .
+RUN mvn dependency:go-offline
+# Copying the entire application code
+COPY ./transaction .
+
+# Copy the built artifacts from the config server
+COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+
+# Build the discovery service
+RUN mvn clean package
 
 # Stage 5: Runtime stage
 FROM openjdk:17-slim AS runtime
