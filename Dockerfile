@@ -24,7 +24,7 @@ COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
 # Build the discovery service
 RUN mvn clean package
 
-# Stage 2: Build gateway
+# Stage 3: Build gateway
 FROM maven:3.8.3-openjdk-17 AS build_gateway
 WORKDIR /usr/src/app/gateway
 COPY ./gateway .
@@ -32,14 +32,14 @@ RUN mvn dependency:go-offline
 # Copying the entire application code
 COPY ./gateway .
 
-# Copy the built artifacts from the config server
+# Copy the built artifacts
 COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 
 # Build the discovery service
 RUN mvn clean package
 
-# Stage 2: Build transaction
+# Stage 4: Build transaction
 FROM maven:3.8.3-openjdk-17 AS build_transaction
 WORKDIR /usr/src/app/transaction
 COPY ./transaction .
@@ -47,7 +47,7 @@ RUN mvn dependency:go-offline
 # Copying the entire application code
 COPY ./transaction .
 
-# Copy the built artifacts from the config server
+# Copy the built artifacts
 COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 COPY --from=build_gateway /usr/src/app/gateway/target/* ./gateway.jar
@@ -63,11 +63,15 @@ WORKDIR /usr/src/app
 # Copy JAR files from the build stage to the runtime image
 COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 
 # Expose the ports each application runs on
-EXPOSE 8888 8761
+EXPOSE 8888 8761 8222 8091
 
 # Specify the command to run each application in the correct order
 CMD java -jar config_server.jar & \
     sleep 30 && \
-    java -jar discovery.jar
+    java -jar discovery.jar && \
+    java -jar gateway.jar && \
+    java -jar transaction.jar
