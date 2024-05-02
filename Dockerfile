@@ -6,10 +6,10 @@ WORKDIR /app
 COPY . .
 
 # Build and install dependencies for each service separately
-RUN mvn clean install -f config_server/pom.xml && \
-    mvn clean install -f discovery/pom.xml && \
-    mvn clean install -f gateway/pom.xml && \
-    mvn clean install -f transaction/pom.xml
+RUN mvn clean install -f /config_server && \
+    mvn clean install -f /discovery && \
+    mvn clean install -f /gateway && \
+    mvn clean install -f /transaction
 
 # Stage 2: Runtime stage
 FROM openjdk:17-slim AS runtime
