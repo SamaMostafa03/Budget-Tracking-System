@@ -49,6 +49,8 @@ COPY ./transaction .
 
 # Copy the built artifacts from the config server
 COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
+COPY --from=build_gateway /usr/src/app/gateway/target/* ./gateway.jar
 
 # Build the discovery service
 RUN mvn clean package
@@ -60,9 +62,12 @@ WORKDIR /usr/src/app
 
 # Copy JAR files from the build stage to the runtime image
 COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 
 # Expose the ports each application runs on
-EXPOSE 8888
+EXPOSE 8888 8761
 
 # Specify the command to run each application in the correct order
-CMD java -jar config_server.jar
+CMD java -jar config_server.jar & \
+    sleep 30 && \
+    java -jar discovery.jar 
