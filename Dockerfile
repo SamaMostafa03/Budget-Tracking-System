@@ -69,6 +69,10 @@ COPY --from=build_transaction /usr/src/app/transaction/target/transaction-0.0.1-
 # Expose the ports each application runs on
 EXPOSE 8888 8761 8222 8091
 
+# Set environment variables for database configuration (example)
+ENV SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/transactions
+ENV SPRING_DATASOURCE_USERNAME=postgres
+ENV SPRING_DATASOURCE_PASSWORD=samaS1234
 # Specify the command to run each application in the correct order
 CMD java -jar config-server.jar & \
     sleep 30 && \
