@@ -1,20 +1,21 @@
 FROM maven:3.8.3-openjdk-17 AS build
 
-#copy all files from the current directory into the /usr/src/app directory within the Docker container
-COPY . /usr/src/app
+# Set the working directory to the user-service directory
+WORKDIR /usr/src/app/gateway
 
-WORKDIR /usr/src/app
+# Copy the Maven project files
+COPY . .
 
 # Build each project using Maven
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 # Runtime stage
 FROM openjdk:17-slim AS runtime
 
-WORKDIR /app
+WORKDIR /usr/src/app/gateway
 
 # Copy JAR files from the build stage to the runtime image
-COPY --from=build /usr/src/app/target/gateway-0.0.1-SNAPSHOT.jar gateway.jar
+COPY --from=build /usr/src/app/config-server/target/discovery/*.jar gateway.jar
 
 # Expose the ports each application runs on (adjust ports if necessary)
 EXPOSE 8222
