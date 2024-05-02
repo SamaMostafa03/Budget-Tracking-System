@@ -48,9 +48,9 @@ RUN mvn dependency:go-offline
 COPY ./transaction .
 
 # Copy the built artifacts from the config server , discovery , gateway
-COPY --from=build_config /usr/src/app/config-server/target/config_server.jar ../config_server.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/discovery.jar ../discovery.jar
-COPY --from=build_gateway /usr/src/app/gateway/target/gateway.jar ../gateway.jar
+COPY --from=build_config /usr/src/app/config-server/target/*.jar ../config_server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/*.jar ../discovery.jar
+COPY --from=build_gateway /usr/src/app/gateway/target/*.jar ../gateway.jar
 
 # Build the transaction service
 RUN mvn clean package
