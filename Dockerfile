@@ -32,7 +32,7 @@ RUN mvn dependency:go-offline
 # Copying the entire application code
 COPY ./gateway .
 
-# Copy the built artifacts from the config server , discovery
+# Copy the built artifacts from the config server and discovery
 COPY --from=build_config /usr/src/app/config-server/target/config_server.jar ../config_server.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/discovery.jar ../discovery.jar
 
@@ -40,22 +40,20 @@ COPY --from=build_discovery /usr/src/app/discovery/target/discovery.jar ../disco
 RUN mvn clean package
 
 # Stage 4: Build transaction
-FROM maven:3.8.3-openjdk-17 AS build_services
+FROM maven:3.8.3-openjdk-17 AS build_transaction
 WORKDIR /usr/src/app/transaction
 COPY ./transaction/pom.xml .
 RUN mvn dependency:go-offline
 # Copying the entire application code
 COPY ./transaction .
 
-# Copy the built artifacts from the config server , discovery , gateway
-COPY --from=build_config /usr/src/app/config-server/target/*.jar ../config_server.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/*.jar ../discovery.jar
-COPY --from=build_gateway /usr/src/app/gateway/target/*.jar ../gateway.jar
+# Copy the built artifacts from the config server, discovery, and gateway
+COPY --from=build_config /usr/src/app/config-server/target/config_server.jar ../config_server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/discovery.jar ../discovery.jar
+COPY --from=build_gateway /usr/src/app/gateway/target/gateway.jar ../gateway.jar
 
 # Build the transaction service
 RUN mvn clean package
-
-
 
 # Stage 5: Runtime stage
 FROM openjdk:17-slim AS runtime
@@ -63,10 +61,10 @@ FROM openjdk:17-slim AS runtime
 WORKDIR /usr/src/app
 
 # Copy JAR files from the build stage to the runtime image
-COPY --from=build_config /usr/src/app/config_server/target/*.jar ./config_server.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/*.jar ./discovery_server.jar
-COPY --from=build_gateway /usr/src/app/gateway/target/*.jar ./api_gateway.jar
-COPY --from=build_services /usr/src/app/transaction/target/*.jar ./user_microservice.jar
+COPY --from=build_config /usr/src/app/config-server/target/config_server.jar .
+COPY --from=build_discovery /usr/src/app/discovery/target/discovery.jar .
+COPY --from=build_gateway /usr/src/app/gateway/target/gateway.jar .
+COPY --from=build_transaction /usr/src/app/transaction/target/user_microservice.jar .
 
 # Expose the ports each application runs on
 EXPOSE 8888 8761 8222 8091
@@ -74,6 +72,8 @@ EXPOSE 8888 8761 8222 8091
 # Specify the command to run each application in the correct order
 CMD java -jar config_server.jar & \
     sleep 30 && \
-    java -jar discovery_server.jar && \
-    java -jar api_gateway.jar && \
+    java -jar discovery.jar & \
+    sleep 30 && \
+    java -jar gateway.jar & \
+    sleep 30 && \
     java -jar user_microservice.jar
