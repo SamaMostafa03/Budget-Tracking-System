@@ -70,4 +70,4 @@ EXPOSE 8888 8761
 # Specify the command to run each application in the correct order
 CMD java -jar config_server.jar & \
     sleep 30 && \
-    java -jar discovery.jar 
+    java -jar discovery.jar
