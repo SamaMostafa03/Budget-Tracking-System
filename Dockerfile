@@ -61,7 +61,7 @@ FROM openjdk:17-slim AS runtime
 WORKDIR /usr/src/app
 
 # Copy JAR files from the build stage to the runtime image
-COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config_server.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
