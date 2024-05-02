@@ -22,7 +22,7 @@ COPY ./discovery .
 COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config-server.jar
 
 # Build the discovery service
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Stage 3: Build gateway
 FROM maven:3.8.3-openjdk-17 AS build_gateway
@@ -37,7 +37,7 @@ COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-S
 COPY --from=build_discovery /usr/src/app/discovery/target/discovery-0.0.1-SNAPSHOT.jar ./discovery.jar
 
 # Build the discovery service
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Stage 4: Build transaction
 FROM maven:3.8.3-openjdk-17 AS build_transaction
@@ -53,7 +53,7 @@ COPY --from=build_discovery /usr/src/app/discovery/target/discovery-0.0.1-SNAPSH
 COPY --from=build_gateway /usr/src/app/gateway/target/gateway-0.0.1-SNAPSHOT.jar ./gateway.jar
 
 # Build the discovery service
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Stage 5: Runtime stage
 FROM openjdk:17-slim AS runtime
