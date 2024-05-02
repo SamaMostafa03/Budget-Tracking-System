@@ -19,7 +19,7 @@ RUN mvn dependency:go-offline
 COPY ./discovery .
 
 # Copy the built artifacts from the config server
-COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+COPY --from=build_config /usr/src/app/config-server/target/* ./config-server.jar
 
 # Build the discovery service
 RUN mvn clean package
@@ -33,7 +33,7 @@ RUN mvn dependency:go-offline
 COPY ./gateway .
 
 # Copy the built artifacts
-COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+COPY --from=build_config /usr/src/app/config-server/target/* ./config-server.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 
 # Build the discovery service
@@ -48,7 +48,7 @@ RUN mvn dependency:go-offline
 COPY ./transaction .
 
 # Copy the built artifacts
-COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+COPY --from=build_config /usr/src/app/config-server/target/* ./config-server.jar
 COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 COPY --from=build_gateway /usr/src/app/gateway/target/* ./gateway.jar
 
@@ -61,13 +61,19 @@ FROM openjdk:17-slim AS runtime
 WORKDIR /usr/src/app
 
 # Copy JAR files from the build stage to the runtime image
-COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config_server.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
+COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config-server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/*discovery-0.0.1-SNAPSHOT.jar ./discovery.jar
+COPY --from=build_gateway /usr/src/app/gateway/target/*gateway-0.0.1-SNAPSHOT.jar ./gateway.jar
+COPY --from=build_transaction /usr/src/app/transaction/target/*transaction-0.0.1-SNAPSHOT.jar ./transaction.jar
 
 # Expose the ports each application runs on
 EXPOSE 8888 8761 8222 8091
 
 # Specify the command to run each application in the correct order
-CMD ["java","-jar","config_server.jar"]
+CMD java -jar config-server.jar & \
+    sleep 30 && \
+    java -jar discovery.jar & \
+    sleep 30 && \
+    java -jar gateway.jar & \
+    sleep 30 && \
+    java -jar transaction.jar
