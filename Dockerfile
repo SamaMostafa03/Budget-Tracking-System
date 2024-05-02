@@ -34,6 +34,7 @@ COPY ./gateway .
 
 # Copy the built artifacts from the config server
 COPY --from=build_config /usr/src/app/config-server/target/* ./config_server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 
 # Build the discovery service
 RUN mvn clean package
