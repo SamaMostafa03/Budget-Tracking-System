@@ -1,7 +1,7 @@
 FROM maven:3.8.3-openjdk-17 AS build
 
 # Set the working directory to the user-service directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy the Maven project files
 COPY . .
