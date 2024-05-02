@@ -19,7 +19,7 @@ RUN mvn dependency:go-offline
 COPY ./discovery .
 
 # Copy the built artifacts from the config server
-COPY --from=build_config /usr/src/app/config-server/target/* ./config-server.jar
+COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config-server.jar
 
 # Build the discovery service
 RUN mvn clean package
@@ -33,8 +33,8 @@ RUN mvn dependency:go-offline
 COPY ./gateway .
 
 # Copy the built artifacts
-COPY --from=build_config /usr/src/app/config-server/target/* ./config-server.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
+COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config-server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/discovery-0.0.1-SNAPSHOT.jar ./discovery.jar
 
 # Build the discovery service
 RUN mvn clean package
@@ -48,9 +48,9 @@ RUN mvn dependency:go-offline
 COPY ./transaction .
 
 # Copy the built artifacts
-COPY --from=build_config /usr/src/app/config-server/target/* ./config-server.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
-COPY --from=build_gateway /usr/src/app/gateway/target/* ./gateway.jar
+COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config-server.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/discovery-0.0.1-SNAPSHOT.jar ./discovery.jar
+COPY --from=build_gateway /usr/src/app/gateway/target/gateway-0.0.1-SNAPSHOT.jar ./gateway.jar
 
 # Build the discovery service
 RUN mvn clean package
