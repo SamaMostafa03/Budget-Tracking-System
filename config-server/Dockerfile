@@ -15,7 +15,7 @@ FROM openjdk:17-slim AS runtime
 WORKDIR /usr/src/app/config-server
 
 # Copy JAR files from the build stage to the runtime image
-COPY --from=build /usr/src/app/config-server/target/config-server/*.jar config_server.jar
+COPY --from=build /usr/src/app/config-server/target/*.jar config_server.jar
 
 # Expose the ports each application runs on (adjust ports if necessary)
 EXPOSE 8888

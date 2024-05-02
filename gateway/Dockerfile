@@ -15,7 +15,7 @@ FROM openjdk:17-slim AS runtime
 WORKDIR /usr/src/app/gateway
 
 # Copy JAR files from the build stage to the runtime image
-COPY --from=build /usr/src/app/config-server/target/discovery/*.jar gateway.jar
+COPY --from=build /usr/src/app/gateway/target/*.jar gateway.jar
 
 # Expose the ports each application runs on (adjust ports if necessary)
 EXPOSE 8222
