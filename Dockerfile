@@ -62,9 +62,9 @@ WORKDIR /usr/src/app
 
 # Copy JAR files from the build stage to the runtime image
 COPY --from=build_config /usr/src/app/config-server/target/config-server-0.0.1-SNAPSHOT.jar ./config-server.jar
-COPY --from=build_discovery /usr/src/app/discovery/target/*discovery-0.0.1-SNAPSHOT.jar ./discovery.jar
-COPY --from=build_gateway /usr/src/app/gateway/target/*gateway-0.0.1-SNAPSHOT.jar ./gateway.jar
-COPY --from=build_transaction /usr/src/app/transaction/target/*transaction-0.0.1-SNAPSHOT.jar ./transaction.jar
+COPY --from=build_discovery /usr/src/app/discovery/target/discovery-0.0.1-SNAPSHOT.jar ./discovery.jar
+COPY --from=build_gateway /usr/src/app/gateway/target/gateway-0.0.1-SNAPSHOT.jar ./gateway.jar
+COPY --from=build_transaction /usr/src/app/transaction/target/transaction-0.0.1-SNAPSHOT.jar ./transaction.jar
 
 # Expose the ports each application runs on
 EXPOSE 8888 8761 8222 8091
