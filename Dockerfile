@@ -70,8 +70,4 @@ COPY --from=build_discovery /usr/src/app/discovery/target/* ./discovery.jar
 EXPOSE 8888 8761 8222 8091
 
 # Specify the command to run each application in the correct order
-CMD java -jar config_server.jar & \
-    sleep 30 && \
-    java -jar discovery.jar && \
-    java -jar gateway.jar && \
-    java -jar transaction.jar
+CMD ["java","-jar","config_server.jar"]
