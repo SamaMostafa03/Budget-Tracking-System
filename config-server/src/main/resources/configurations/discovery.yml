@@ -1,6 +1,6 @@
 eureka:
   instance:
-    hostname: localhost
+    hostname: budgetbuddy-ri8k.onrender.com
   client:
     register-with-eureka: false
     fetch-registry: false

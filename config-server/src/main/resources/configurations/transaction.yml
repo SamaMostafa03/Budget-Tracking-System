@@ -1,9 +1,9 @@
 eureka:
   instance:
-    hostname: localhost
+    hostname: budgetbuddy-ri8k.onrender.com
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: https://budgetbuddy-ri8k.onrender.com:8761/eureka
 
 
 server:
