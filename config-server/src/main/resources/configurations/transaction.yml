@@ -13,11 +13,6 @@ spring:
     name: transaction
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/transactions
-    username: postgres
-    password: samaS1234
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    url: postgres://transaction_yf5f_user:URuyKAU4Ivm0kQ6hGcpFSayFQZDhmm9Q@dpg-coq45vtjm4es73af3250-a/transaction_yf5f
+    username: transaction_yf5f_user
+    password: URuyKAU4Ivm0kQ6hGcpFSayFQZDhmm9Q
