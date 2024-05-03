@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Budget-Tracking-System.iml" filepath="$PROJECT_DIR$/.idea/Budget-Tracking-System.iml" />
-      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/config-server/config-server.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/config-server/config-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/discovery/discovery.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/discovery/discovery.iml" />
-      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/gateway/gateway.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/gateway/gateway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/transaction/transaction.iml" filepath="$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/transaction/transaction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/config-server/config-server.iml" filepath="$PROJECT_DIR$/config-server/config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/discovery/discovery.iml" filepath="$PROJECT_DIR$/discovery/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/transaction/transaction.iml" filepath="$PROJECT_DIR$/transaction/transaction.iml" />
     </modules>
   </component>
 </project>

@@ -7,6 +7,10 @@
         <option value="$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/discovery/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/transaction/pom.xml" />
         <option value="$PROJECT_DIR$/springboot-3-micro-service-demo-main/springboot-3-micro-service-demo-main/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/transaction/pom.xml" />
       </list>
     </option>
   </component>
