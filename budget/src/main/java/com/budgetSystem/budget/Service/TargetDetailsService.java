@@ -1,8 +1,4 @@
 package com.budgetSystem.budget.Service;
-
- 
- 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +33,8 @@ public class TargetDetailsService {
             double outflow = transactionClient.getOutflowForUser(target.getTargetID());
             inflow -= assignedMoney;
             double totalNeeded = target.getTotalMoneyNeeded();
-
+            if(assignedMoney>inflow)
+                throw new RecordNotFoundExecption("can't  assign this amount");
             if(totalNeeded<assignedMoney)assignedMoney=totalNeeded;
 
             // Subtract assigned money from the total needed amount

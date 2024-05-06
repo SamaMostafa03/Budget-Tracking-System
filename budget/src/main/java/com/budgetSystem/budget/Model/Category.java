@@ -1,4 +1,6 @@
 package com.budgetSystem.budget.Model;
+
+import java.util.List;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,14 +20,12 @@ public class Category {
 
     @NotEmpty(message = "categoryName is mandatory")
     private String categoryName;
-
-    @NotNull(message = "budgetID cannot be null")
-    @Positive(message = "budgetID cannot be negative")
-    private Integer budgetID;
+    // @JsonIgnore
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Target> targets;
 
     @NotNull(message = "clientID cannot be null")
     @Positive(message = "clientID cannot be negative")
     private Integer clientID;
-
 
 }

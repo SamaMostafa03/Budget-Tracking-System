@@ -34,8 +34,8 @@ public class Target {
     @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
      private Category category;
-     @JsonBackReference
-    @OneToMany(mappedBy = "target", cascade = CascadeType.ALL)
+    // @JsonBackReference
+    @OneToMany(mappedBy = "target", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<TargetDetails> targetDetails;
     @NotNull(message = "clientID cannot be null")
     @Positive(message = "clientID cannot be negative")

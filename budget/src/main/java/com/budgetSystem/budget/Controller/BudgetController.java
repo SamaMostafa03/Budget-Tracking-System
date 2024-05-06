@@ -1,11 +1,7 @@
 package com.budgetSystem.budget.Controller;
 
-import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.validation.Valid;
-import org.apache.hc.core5.http.HttpStatus;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +27,14 @@ public class BudgetController {
     @GetMapping("/monthlyBudget")
     public ResponseEntity<?> findByMonthAndClientID(@RequestParam int month, @RequestParam int clientID)
     {
+
         return ResponseEntity.ok(new SuccessResponse(budgetService.findByMonthAndClientID(month, clientID)));
     }
 
-    @GetMapping("/deleteBudget")
+    @DeleteMapping("/deleteBudget")
     public ResponseEntity<?> deleteBudgetByClient(@RequestParam Integer clientID, @RequestParam Integer budgetID)
     {
-        budgetService.deleteBudgetForClient(budgetID,clientID);
+        budgetService.deleteBudgetForClient(clientID,budgetID);
         return ResponseEntity.ok(new SuccessResponse());
     }
      

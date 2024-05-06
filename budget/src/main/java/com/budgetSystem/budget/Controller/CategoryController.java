@@ -17,7 +17,7 @@ public class CategoryController {
     SuccessResponse successResponse = new SuccessResponse();
 
     @PostMapping("/addCategory")
-    public ResponseEntity<?> addCategory(@Valid @RequestBody Category category)
+    public ResponseEntity<?> addCategory( @RequestBody Category category)
     {
         categoryService.addCategory(category);
         return ResponseEntity.ok(successResponse);

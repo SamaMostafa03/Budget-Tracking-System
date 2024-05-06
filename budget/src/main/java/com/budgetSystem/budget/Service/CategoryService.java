@@ -2,14 +2,10 @@ package com.budgetSystem.budget.Service;
 
  
 import java.util.List;
-import java.util.Optional;
 
 import com.budgetSystem.budget.exceptions.RecordNotFoundExecption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
-import com.budgetSystem.budget.Model.Budget;
 import com.budgetSystem.budget.Model.Category;
 import com.budgetSystem.budget.Model.Target;
 import com.budgetSystem.budget.Repository.CategoryRepository;

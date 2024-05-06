@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.budgetSystem.budget.exceptions.RecordNotFoundExecption;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
+ 
 
 import com.budgetSystem.budget.Model.Budget;
 import com.budgetSystem.budget.Repository.BudgetRepository;
@@ -50,7 +50,7 @@ public class BudgetService {
         return budgetPeriod.getMonthValue();
     }
 
-    public void deleteBudgetForClient(Integer budgetId, Integer clientId) {
+    public void deleteBudgetForClient(Integer clientId,Integer budgetId) {
         Optional<Budget> budget = budgetRepository.findById(budgetId);
         if(budget.isPresent())
         {

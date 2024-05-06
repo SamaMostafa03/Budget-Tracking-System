@@ -27,5 +27,4 @@ public class Budget {
     @Positive(message = "clientID cannot be negative")
     private Integer clientID;
 
-
 }
