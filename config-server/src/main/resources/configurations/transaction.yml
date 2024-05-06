@@ -1,10 +1,9 @@
 eureka:
   instance:
-    hostname: budgetbuddy-ri8k.onrender.com
+    hostname: localhost
   client:
     service-url:
-      defaultZone: https://budgetbuddy-ri8k.onrender.com:8761/eureka
-
+      defaultZone: http://localhost:8761/eureka
 
 server:
   port: 8091
@@ -12,10 +11,12 @@ spring:
   application:
     name: transaction
   datasource:
-    url: jdbc:postgresql://dpg-coq45vtjm4es73af3250-a.oregon-postgres.render.com:5432/transaction_yf5f
-    username: transaction_yf5f_user
-    password: URuyKAU4Ivm0kQ6hGcpFSayFQZDhmm9Q
     driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/transactions
+    username: postgres
+    password: samaS1234
   jpa:
     hibernate:
       ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

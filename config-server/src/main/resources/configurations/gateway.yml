@@ -13,7 +13,12 @@ spring:
           enabled: true
       routes:
         - id: transaction
-          uri: https://budgetbuddy-ri8k.onrender.com:8091
+          uri: http://localhost:8091
           predicates:
             - Path=/api/transaction/**
+        - id: user
+          uri: http://localhost:8999
+          predicates:
+            - Path=/**
+
 
