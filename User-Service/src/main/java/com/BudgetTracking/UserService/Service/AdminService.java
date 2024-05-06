@@ -78,6 +78,15 @@ public class AdminService {
     return totalUsersRegisteredToday;
   }
 
+  public void AddCurrencyType(Integer clientId,String currencyType) {
+    Optional<User> user = userRepository.findById(clientId);
+    if(user.isPresent())
+    {
+      User users = user.get();
+      users.setCurrencyType(currencyType);
+      userRepository.save(users);
+    }else throw new RecordNotFoundExecption("Client id not found");
+  }
   public User searchByID(Integer clientId) {
     Optional<User> user = userRepository.findById(clientId);
     if (user.isPresent()) {

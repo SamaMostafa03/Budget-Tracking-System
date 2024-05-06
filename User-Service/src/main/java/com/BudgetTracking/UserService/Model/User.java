@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.validation.constraints.Pattern;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,8 +47,12 @@ public class User implements UserDetails {
 
     private LocalDate registerDate;
     private LocalDate loginDate;
-    // getters and setters
 
+    @Column(name = "currency_type", columnDefinition = "VARCHAR(255) DEFAULT 'USD'")
+    @Pattern(regexp = "^(USD|EGP|EUR|GBP)$", message = "Currency type must be USD, EGP, EUR, or GBP")
+    private String CurrencyType;
+
+    // getters and setters
     public List<Token> getTokens() {
         return tokens;
     }
@@ -62,6 +67,7 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.CurrencyType = "USD";
     }
 
     public User() {
@@ -152,5 +158,11 @@ public class User implements UserDetails {
 
     public void setLoginDate(LocalDate date) {
         this.loginDate = date;
+    }
+    public void setCurrencyType(String currencyType) {
+        this.CurrencyType = currencyType;
+    }
+    public String getCurrencyType() {
+        return this.CurrencyType;
     }
 }

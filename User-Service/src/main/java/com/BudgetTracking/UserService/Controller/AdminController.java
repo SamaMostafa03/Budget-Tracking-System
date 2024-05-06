@@ -26,6 +26,13 @@ public class AdminController {
         return ResponseEntity.ok(new SuccessResponse());
     }
 
+    @PostMapping("/{clientId}/currency")
+    public ResponseEntity<?> addCurrencyType(@PathVariable Integer clientId, @RequestParam String currencyType) {
+
+        adminService.AddCurrencyType(clientId, currencyType);
+        return ResponseEntity.ok(new SuccessResponse());
+    }
+
     @GetMapping("/getTotalUsers")
     public ResponseEntity<?> getTotalNumberOfUsers() {
         return ResponseEntity.ok(new SuccessResponse(adminService.getTotalNumberOFUsers()));
