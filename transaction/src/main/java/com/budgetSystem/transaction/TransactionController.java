@@ -1,6 +1,5 @@
 package com.budgetSystem.transaction;
-
-import com.budgetSystem.transaction.exceptions.RecordNotFoundExecption;
+ 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,18 +92,16 @@ public class TransactionController {
         return ResponseEntity.ok(new SuccessResponse(service.CheckForTransactionsOfClientByWallet(clientID,walletType)));
     }
 
-    @GetMapping("client/{targetId}/outflow")
-    public ResponseEntity<?> getOutflowForUser(@PathVariable("targetId") int targetId)
-    {
-        double outflow = service.calculateOutflowForUser(targetId);
-        return ResponseEntity.ok(new SuccessResponse(outflow));
+    @GetMapping("/getinflow/{clientId}")
+    public double getInflowForUser(@PathVariable("clientId") int clientId) {
+        double inflowByWalletType = service.calculateTotalInflowForUser(clientId);
+        return inflowByWalletType;
     }
 
-    @GetMapping("client/{clientId}/inflow")
-    public ResponseEntity<?> getTotalInflowForUser(@PathVariable("clientId") int clientId)
-    {
-        double inflow = service.calculateTotalInflowForUser(clientId);
-        return ResponseEntity.ok(new SuccessResponse(inflow));
+    @GetMapping("/getoutflow/{targetId}")
+    public double getOutflowForUser(@PathVariable("targetId") int targetId) {
+        double outflow = service.calculateOutflowForUser(targetId);
+        return outflow;
     }
 
     @GetMapping("client/{clientId}/wallet/{wallet-type}/inflow")

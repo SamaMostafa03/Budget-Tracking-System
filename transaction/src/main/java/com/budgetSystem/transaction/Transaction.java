@@ -1,6 +1,5 @@
 package com.budgetSystem.transaction;
-
-import com.budgetSystem.transaction.exceptions.RecordNotFoundExecption;
+ 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.*;
