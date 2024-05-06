@@ -12,6 +12,7 @@ public class SuccessResponse {
     public SuccessResponse() {
         super();
         this.success = Boolean.TRUE;
+        this.data="";
     }
 
     public SuccessResponse(Object data) {

@@ -48,8 +48,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(error);
     }
-    @ExceptionHandler(AllOtherExceptions.class)
-    public ResponseEntity<?> handleOtherExceptions(AllOtherExceptions ex)
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<?> handleOtherExceptions(Throwable ex)
     {
        // logger.error("An unexpected error occurred: {}", ex.getMessage());
         List<String> errors = new ArrayList<String>();
