@@ -34,7 +34,7 @@ EXPOSE 8070
 
 # Command to run application
 CMD ["./wait-for-services.sh",
-     "config-server", "8888",
+     "config", "8888",
      "discovery", "8761",
      "gateway", "8222",
      "java", "-jar", "budget.jar"]
