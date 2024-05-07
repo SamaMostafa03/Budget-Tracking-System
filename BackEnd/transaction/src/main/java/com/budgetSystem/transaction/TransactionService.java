@@ -49,10 +49,12 @@ public class TransactionService {
         return transactions.size();
     }
 
-    public void deleteTransaction(Integer transactionID) {
+    public List<Transaction> deleteTransaction(Integer transactionID) {
         Optional<Transaction> transactionOptional = repository.findById(transactionID);
         if (transactionOptional.isPresent()) {
+            Integer clientId = transactionOptional.get().getClientID();
             repository.deleteById(transactionID);
+            return repository.findAllByClientID(clientId);
         } else {
             throw new RecordNotFoundExecption("Transaction ID not found");
         }

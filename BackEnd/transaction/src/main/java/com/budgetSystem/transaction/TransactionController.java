@@ -1,5 +1,6 @@
 package com.budgetSystem.transaction;
  
+import com.budgetSystem.transaction.exceptions.RecordNotFoundExecption;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -65,8 +67,11 @@ public class TransactionController {
                                                     @PathVariable("transaction-id") Integer transaction_id)
     {
         findTransaction(clientID,transaction_id);
-        service.deleteTransaction(transaction_id);
-        return ResponseEntity.ok(successResponce);
+        List<Transaction> oldTransactions = service.deleteTransaction(transaction_id);
+        SuccessResponse successResponse = new SuccessResponse();
+        if (oldTransactions.size() == 0)successResponse.setData("");
+        else successResponse.setData(oldTransactions);
+        return ResponseEntity.ok(successResponse);
     }
 
 
