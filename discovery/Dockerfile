@@ -21,16 +21,7 @@ FROM openjdk:17-slim AS runtime
 # Copy the JAR file from the build stage to the runtime image
 COPY --from=build /usr/src/app/target/discovery-0.0.1-SNAPSHOT.jar discovery.jar
 
-# Copy the wait-for-services.sh script into the Docker image
-COPY wait-for-services.sh /usr/src/app/wait-for-services.sh
-
-# Mark the script as executable and install netcat
-RUN chmod +x wait-for-services.sh \
-    && apt-get update \
-    && apt-get install -y netcat
-
 # Expose port
 EXPOSE 8761
 
-# Command to run application
-CMD ["./wait-for-services.sh", "config", "8888", "java", "-jar", "discovery.jar"]
+CMD ["java", "-jar", "discovery.jar"]
