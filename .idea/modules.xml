@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Budget-Tracking-System.iml" filepath="$PROJECT_DIR$/.idea/Budget-Tracking-System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackEnd/User-Service/User-Service.iml" filepath="$PROJECT_DIR$/BackEnd/User-Service/User-Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackEnd/budget/budget.iml" filepath="$PROJECT_DIR$/BackEnd/budget/budget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackEnd/config-server/config-server.iml" filepath="$PROJECT_DIR$/BackEnd/config-server/config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackEnd/discovery/discovery.iml" filepath="$PROJECT_DIR$/BackEnd/discovery/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackEnd/gateway/gateway.iml" filepath="$PROJECT_DIR$/BackEnd/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackEnd/transaction/transaction.iml" filepath="$PROJECT_DIR$/BackEnd/transaction/transaction.iml" />
     </modules>
   </component>
 </project>

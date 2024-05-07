@@ -28,73 +28,14 @@ services:
       - postgres
     restart: unless-stopped
 
-  config-server:
+  budget-tracking-system:
     build:
-      context:   ./config-server
+      context:   ./BackEnd
       dockerfile: Dockerfile
-    ports:
-      - 8888:8080
-    networks:
-      - postgres
-  discovery:
-    build:
-      context:   ./discovery
-      dockerfile: Dockerfile
-    ports:
-      - 8761:8080
     networks:
       - postgres
     depends_on:
-      - config-server
-  gateway:
-    build:
-      context:   ./gateway
-      dockerfile: Dockerfile
-    ports:
-      - 8222:8080
-    networks:
-      - postgres
-    depends_on:
-      - config-server
-      - discovery
-  transaction:
-    build:
-      context:   ./transaction
-      dockerfile: Dockerfile
-    ports:
-      - 8091:8080
-    networks:
-      - postgres
-    depends_on:
-      - config-server
-      - discovery
-      - gateway
-
-  budget:
-    build:
-      context:   ./budget
-      dockerfile: Dockerfile
-    ports:
-      - 8070:8080
-    networks:
-      - postgres
-    depends_on:
-      - config-server
-      - discovery
-      - gateway
-
-  user:
-    build:
-      context:   ./User-Service
-      dockerfile: Dockerfile
-    ports:
-      - 8999:8080
-    networks:
-      - postgres
-    depends_on:
-      - config-server
-      - discovery
-      - gateway
+      - postgresql
 
 networks:
   postgres:
