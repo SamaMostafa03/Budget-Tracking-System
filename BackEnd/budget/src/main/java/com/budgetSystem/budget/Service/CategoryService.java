@@ -2,12 +2,16 @@ package com.budgetSystem.budget.Service;
 
  
 import java.util.List;
+import java.util.Optional;
 
 import com.budgetSystem.budget.exceptions.RecordNotFoundExecption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.budgetSystem.budget.Model.Budget;
 import com.budgetSystem.budget.Model.Category;
 import com.budgetSystem.budget.Model.Target;
+import com.budgetSystem.budget.Repository.BudgetRepository;
 import com.budgetSystem.budget.Repository.CategoryRepository;
 import com.budgetSystem.budget.Repository.TargetRepository;
 
@@ -19,15 +23,30 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public void addCategory(Category category)
-    {
-         categoryRepository.save(category);
+    @Autowired
+    private BudgetRepository budgetRepository;
+    public void addCategory(Integer budgetId, Category category) {
+         
+        Optional<Budget> optionalBudget = budgetRepository.findById(budgetId);
+        if (optionalBudget.isPresent()) {
+            Budget budget = optionalBudget.get();
+            
+            // Associate the Budget with the Category
+            category.setBudget(budget);
+            
+            // Save the Category
+            categoryRepository.save(category);
+        } else {
+            // Handle case where the Budget with the given ID does not exist
+            throw new RecordNotFoundExecption(("Budget not found"));
+        }
     }
 
-    public void updateCategoryName(Integer clientId, Integer categoryId, String newName) {
+
+    public Category updateCategoryName(Integer clientId, Integer categoryId, String newName) {
         Category category = getCategoryById(clientId, categoryId);
         category.setCategoryName(newName);
-        categoryRepository.save(category);
+       return categoryRepository.save(category);
     }
 
     public Category getCategoryById(Integer clientId,Integer categoryId)
@@ -49,6 +68,7 @@ public class CategoryService {
                 List<Target> targets = targetRepository.findByCategory(category);
                 targetRepository.deleteAll(targets);
                 categoryRepository.delete(category);
+                
             }
             throw new RecordNotFoundExecption(("client has no such category id"));
         }

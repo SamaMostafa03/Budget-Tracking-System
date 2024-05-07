@@ -48,11 +48,13 @@ public class TargetService {
         return targets;
     }
 
-    public void deleteTarget(Integer targetId, Integer clientId) {
+    public List <Target> deleteTarget(Integer targetId, Integer clientId) {
         Target target = targetRepository.findById(targetId).orElse(null);
         if (target != null) {
             if (target.getClientID().equals(clientId)) {
                 targetRepository.delete(target);
+                targetRepository.findByClientID(clientId);
+                return targetRepository.findByClientID(clientId);
 
             } else {
                 throw new RecordNotFoundExecption("Client has no such target id");

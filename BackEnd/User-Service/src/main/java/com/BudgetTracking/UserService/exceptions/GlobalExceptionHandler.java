@@ -27,7 +27,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         //logger.error("Record not found: {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Arrays.asList(ex.getMessage()));
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.OK)
                 .body(error);
     }
 
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         ErrorResponse error = new ErrorResponse("Validation for arguments failed", errors);
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.OK)
                 .body(error);
     }
     @ExceptionHandler(Throwable.class)
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errors.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse(ex.toString(), errors);
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
+                .status(HttpStatus.OK)
                 .body(error);
     }
 
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         //logger.error("Record exist: {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(ex.getLocalizedMessage(), Arrays.asList(ex.getMessage()));
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.OK)
                 .body(error);
     }
 

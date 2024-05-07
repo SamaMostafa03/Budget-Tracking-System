@@ -7,6 +7,10 @@ import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Setter
 @Getter
@@ -26,5 +30,8 @@ public class Budget {
     @NotNull(message = "clientID cannot be null")
     @Positive(message = "clientID cannot be negative")
     private Integer clientID;
+    //@JsonIgnore
+    @OneToMany(mappedBy = "budget", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Category> categories;
 
 }

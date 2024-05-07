@@ -1,6 +1,7 @@
 package com.budgetSystem.budget.Controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.budgetSystem.budget.Model.Budget;
+import com.budgetSystem.budget.Model.Target;
 import com.budgetSystem.budget.Service.TargetService;
 
 import lombok.AllArgsConstructor;
@@ -48,9 +51,11 @@ public class TargetController {
 
     @DeleteMapping("/deleteTarget")
     public ResponseEntity<?> deleteTarget(@RequestParam Integer targetId, @RequestParam Integer clientId) {
-        targetService.deleteTarget(targetId, clientId);
-
-        return ResponseEntity.ok(new SuccessResponse());
+       List<Target> targets = targetService.deleteTarget(targetId,clientId);
+        SuccessResponse successResponse = new SuccessResponse();
+        if (targets.size() == 0)successResponse.setData("");
+        else successResponse.setData(targets);
+        return ResponseEntity.ok(successResponse);
 
     }
 
