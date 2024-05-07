@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="573b50ae-e0a5-45ad-9294-effcd0ac6529" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Config/WebConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Service/JwtService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

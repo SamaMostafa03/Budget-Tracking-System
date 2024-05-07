@@ -60,21 +60,23 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
+    private SecretKey getSignKey(){
+        byte[] keyBytes =Decoders.BASE64URL.decode(SECERT_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
     public String generateToken (User user){
         String token = Jwts
                 .builder()
                 .subject(user.getEmail())
+                .claim("role", user.getRole())
+                .claim("userid", user.getId())
+                .claim("name",user.getName())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis()+24*60*60*1000)  )
                 .signWith(getSignKey())
                 .compact();
         return token;
     }
-    private SecretKey getSignKey(){
-        byte[] keyBytes =Decoders.BASE64URL.decode(SECERT_KEY);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
 
 
 }

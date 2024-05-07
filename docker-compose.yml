@@ -1,18 +1,47 @@
 services:
-  postgresql:
-    container_name: postgresql
+  postgresql-transaction:
+    container_name: postgresql-transaction
     image: postgres
     environment:
+      POSTGRES_DB: transactions
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: samaS1234
-      PGDATA: /data/postgres
+      PGDATA: /data/postgres/database1
     volumes:
-      - postgres:/data/postgres
+      - postgres:/data/postgres/database1
     ports:
       - "5432:5432"
-    networks:
-      - postgres
     restart: unless-stopped
+
+  postgresql-budget:
+    container_name: postgresql-budget
+    image: postgres
+    environment:
+      POSTGRES_DB: budgets
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: samaS1234
+      PGDATA: /data/postgres/database2
+    volumes:
+      - postgres:/data/postgres/database2
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+
+  postgresql-user:
+    container_name: postgresql-user
+    image: postgres
+    environment:
+      POSTGRES_DB: user_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: samaS1234
+      PGDATA: /data/postgres/database3
+    volumes:
+      - postgres:/data/postgres/database3
+    ports:
+      - "5434:5432"
+    restart: unless-stopped
+
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -24,8 +53,6 @@ services:
       - pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
-    networks:
-      - postgres
     restart: unless-stopped
 
   budget-tracking-system:
@@ -33,15 +60,16 @@ services:
       context:   ./BackEnd
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    networks:
-      - postgres
+      - "8888:8888"
+      - "8761:8761"
+      - "8222:8222"
+      - "8091:8091"
+      - "8070:8070"
+      - "8999:8999"
     depends_on:
-      - postgresql
-
-networks:
-  postgres:
-    driver: bridge
+      - postgresql-transaction
+      - postgresql-budget
+      - postgresql-user
 
 volumes:
   postgres:
