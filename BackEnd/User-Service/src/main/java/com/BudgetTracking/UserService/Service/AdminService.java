@@ -30,11 +30,6 @@ public class AdminService {
     return filteredUsers;
   }
 
-  public void deleteUser(Integer userId)
-  {
-      searchByID(userId);
-      userRepository.deleteById(userId);
-  }
 
   public int getTotalNumberOFUsers() {
     List<User> users = userRepository.findAll();
@@ -93,5 +88,19 @@ public class AdminService {
       return user.get();
     }
     throw new RecordNotFoundExecption("Client id not found");
+  }
+
+  public List<User> deleteUser(Integer userId)
+  {
+    searchByID(userId);
+    userRepository.deleteById(userId);
+    List<User> users = userRepository.findAll();
+    List<User> filteredUsers = new ArrayList<>();
+    for (User user : users) {
+      if ("User".equals(user.getRole().toString())) {
+        filteredUsers.add(user);
+      }
+    }
+    return filteredUsers;
   }
 }

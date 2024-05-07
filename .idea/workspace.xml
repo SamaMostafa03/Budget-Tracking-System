@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="573b50ae-e0a5-45ad-9294-effcd0ac6529" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/transaction/src/main/java/com/budgetSystem/transaction/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/transaction/src/main/java/com/budgetSystem/transaction/TransactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/transaction/src/main/java/com/budgetSystem/transaction/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/transaction/src/main/java/com/budgetSystem/transaction/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Service/AdminService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +45,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.TransactionApplication">
+  <component name="RunManager" selected="Application.UserServiceApplication">
     <configuration name="ConfigServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.budgetSystem.configserver.ConfigServerApplication" />
       <module name="config-server" />
@@ -99,8 +98,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.BudgetTracking.UserService.UserServiceApplication" />
+      <module name="User-Service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.BudgetTracking.UserService.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.UserServiceApplication" />
         <item itemvalue="Application.TransactionApplication" />
         <item itemvalue="Application.GatewayApplication" />
         <item itemvalue="Application.DiscoveryApplication" />

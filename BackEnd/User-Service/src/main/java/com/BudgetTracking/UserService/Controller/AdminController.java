@@ -1,11 +1,14 @@
 package com.BudgetTracking.UserService.Controller;
  
+import com.BudgetTracking.UserService.Model.User;
 import com.BudgetTracking.UserService.Service.AdminService;
  
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("admin")
@@ -21,9 +24,12 @@ public class AdminController {
     }
  
     @DeleteMapping("/deleteUsers/{userId}")
-    public  ResponseEntity<?> deleteUser(@PathVariable Integer userId) {
-        adminService.deleteUser(userId);
-        return ResponseEntity.ok(new SuccessResponse());
+    public ResponseEntity<?> deleteUser(@PathVariable Integer userId) {
+        List<User> users = adminService.deleteUser(userId);
+        SuccessResponse successResponse = new SuccessResponse();
+        if (users.size() == 0)successResponse.setData("");
+        else successResponse.setData(users);
+        return ResponseEntity.ok(successResponse);
     }
 
     @PostMapping("/{clientId}/currency")
