@@ -50,13 +50,15 @@ public class BudgetService {
         return budgetPeriod.getMonthValue();
     }
 
-    public void deleteBudgetForClient(Integer clientId,Integer budgetId) {
+    public List<Budget> deleteBudgetForClient(Integer clientId,Integer budgetId) {
         Optional<Budget> budget = budgetRepository.findById(budgetId);
         if(budget.isPresent())
         {
             if(budget.get().getClientID().equals(clientId))
             {
                 budgetRepository.deleteById(budgetId);
+                List<Budget> budgets = budgetRepository.findByClientID(clientId);
+                return budgets;
             }
             throw new RecordNotFoundExecption("client has no such budget id");
         }

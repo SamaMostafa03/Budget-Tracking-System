@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="573b50ae-e0a5-45ad-9294-effcd0ac6529" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/User-Service/src/main/java/com/BudgetTracking/UserService/Service/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/budget/src/main/java/com/budgetSystem/budget/Controller/BudgetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/budget/src/main/java/com/budgetSystem/budget/Controller/BudgetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/budget/src/main/java/com/budgetSystem/budget/Service/BudgetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/budget/src/main/java/com/budgetSystem/budget/Service/BudgetService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

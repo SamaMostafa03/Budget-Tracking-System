@@ -10,6 +10,8 @@ import com.budgetSystem.budget.Service.BudgetService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/budgets")
 @RequiredArgsConstructor
@@ -24,6 +26,12 @@ public class BudgetController {
         return ResponseEntity.ok(new SuccessResponse());
     }
 
+    @GetMapping("/allBudgetsByClient")
+    public ResponseEntity<?> findAllBudgetsByClientID(@RequestParam int clientID)
+    {
+        return ResponseEntity.ok(new SuccessResponse(budgetService.findByClientID(clientID)));
+    }
+
     @GetMapping("/monthlyBudget")
     public ResponseEntity<?> findByMonthAndClientID(@RequestParam int month, @RequestParam int clientID)
     {
@@ -34,8 +42,11 @@ public class BudgetController {
     @DeleteMapping("/deleteBudget")
     public ResponseEntity<?> deleteBudgetByClient(@RequestParam Integer clientID, @RequestParam Integer budgetID)
     {
-        budgetService.deleteBudgetForClient(clientID,budgetID);
-        return ResponseEntity.ok(new SuccessResponse());
+        List<Budget> budgets = budgetService.deleteBudgetForClient(clientID,budgetID);
+        SuccessResponse successResponse = new SuccessResponse();
+        if (budgets.size() == 0)successResponse.setData("");
+        else successResponse.setData(budgets);
+        return ResponseEntity.ok(successResponse);
     }
      
 
