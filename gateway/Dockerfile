@@ -25,4 +25,4 @@ COPY --from=build /usr/src/app/target/gateway-0.0.1-SNAPSHOT.jar gateway.jar
 EXPOSE 8222
 
 # Command to run application
-CMD "java", "-jar", "gateway.jar"
+CMD ["java", "-jar", "gateway.jar"]
