@@ -33,6 +33,4 @@ RUN chmod +x wait-for-services.sh \
 EXPOSE 8761
 
 # Command to run application
-CMD ["./wait-for-services.sh",
-     "config", "8888",
-     "java", "-jar", "discovery.jar"]
+CMD ["./wait-for-services.sh", "config", "8888", "java", "-jar", "discovery.jar"]
