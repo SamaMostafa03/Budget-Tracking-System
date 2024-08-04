@@ -33,8 +33,8 @@ public class TransactionController {
         return ResponseEntity.ok(new SuccessResponse(service.findAllTransactions()));
     }
 
-    @GetMapping("client/{client-id}")
-    public ResponseEntity<?> findAllTransactionsByClient(@PathVariable("client-id") Integer clientID)
+    @GetMapping("/client")
+    public ResponseEntity<?> findAllTransactionsByClient(@RequestParam Integer clientID)
     {
         return ResponseEntity.ok(new SuccessResponse(service.findAllTransactionsByClient(clientID)));
     }
