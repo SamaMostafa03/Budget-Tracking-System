@@ -23,7 +23,7 @@ building CRUD APIs for the backend, implementing three microservices utilizing O
 - The system offers basic reporting features (e.g., income vs. expenses by month) and filter by date or wallet account.
 
 ## Architecture Design
-![Arch](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Arch.PNG?raw=true)
+![Arch](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/Arch.png?raw=true)
 
 ### API Gateway
 
@@ -59,9 +59,9 @@ This project demonstrates inter-service communication using OpenFeign, a declara
 
 ## UML Diagrams
 - Use Case Diagram:
-![usecase](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/usecase.PNG?raw=true)
+![usecase](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/usecase.png?raw=true)
 
 - Class Diagram:
-![class](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/class.PNG?raw=true)
+![class](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/class.png?raw=true)
 
 ## Postman
