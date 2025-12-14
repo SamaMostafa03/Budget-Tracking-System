@@ -1,6 +1,6 @@
 package com.BudgetTracking.UserService.Service;
 
-import com.BudgetTracking.UserService.exceptions.RecordNotFoundExecption;
+import com.sama.exceptions.RecordNotFoundExecption;
 import com.BudgetTracking.UserService.repository.UserRepository;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.userdetails.UserDetails;

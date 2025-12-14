@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.budgetSystem.budget.Repository.CategoryRepository;
-import com.budgetSystem.budget.exceptions.RecordNotFoundExecption;
+import com.sama.exceptions.RecordNotFoundExecption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

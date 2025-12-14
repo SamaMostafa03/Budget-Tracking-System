@@ -4,9 +4,9 @@ import com.BudgetTracking.UserService.Model.AuthenticationResponse;
 import com.BudgetTracking.UserService.Model.Role;
 import com.BudgetTracking.UserService.Model.Token;
 import com.BudgetTracking.UserService.Model.User;
- 
-import com.BudgetTracking.UserService.exceptions.RecordExistException;
-import com.BudgetTracking.UserService.exceptions.RecordNotFoundExecption;
+
+import com.sama.exceptions.RecordExistException;
+import com.sama.exceptions.RecordNotFoundException;
 import com.BudgetTracking.UserService.repository.TokenRepository;
 import com.BudgetTracking.UserService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

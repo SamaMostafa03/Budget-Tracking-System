@@ -1,7 +1,7 @@
 package com.BudgetTracking.UserService.Service;
 
 import com.BudgetTracking.UserService.Model.User;
-import com.BudgetTracking.UserService.exceptions.RecordNotFoundExecption;
+import com.sama.exceptions.RecordNotFoundException;
 import com.BudgetTracking.UserService.repository.UserRepository;
 
 import java.time.LocalDate;

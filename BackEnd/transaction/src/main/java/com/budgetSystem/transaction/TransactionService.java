@@ -1,6 +1,7 @@
 package com.budgetSystem.transaction;
 
-import com.budgetSystem.transaction.exceptions.RecordNotFoundExecption;
+import com.sama.exceptions.RecordNotFoundExecption;
+import com.budgetSystem.transaction.model.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,9 +112,6 @@ public class TransactionService {
 
     private List<Transaction> filterTransactionsOfClientByWallet(Integer clientId, String walletType)
     {
-        if (walletType == null || !walletType.matches("^(cash|visa|bank|debit)$")) {
-            throw new RecordNotFoundExecption("Wallet type must be cash, visa, bank, or debit");
-        }
         List<Transaction> clientTransactions = repository.findAllByClientID(clientId);
         List<Transaction> filteredTransactions = clientTransactions.stream()
                 .filter(transaction -> transaction.getWalletType().equals(walletType))
@@ -141,8 +139,6 @@ public class TransactionService {
         {
             for (Transaction transaction : transactions) {
                 walletTotalInflow += transaction.getInflowAmount();
-            }
-            for (Transaction transaction : transactions) {
                 walletTotalInflow -= transaction.getOutflowAmount();
             }
         }
