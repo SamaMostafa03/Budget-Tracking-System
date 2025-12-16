@@ -15,6 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "category")
 public class Category {
     @Id
@@ -22,16 +23,14 @@ public class Category {
     private Integer categoryID;
 
     @NotEmpty(message = "categoryName is mandatory")
+    @Column(nullable = false)
     private String categoryName;
-    // @JsonIgnore
+
+    @NotNull(message = "client Id cannot be null")
+    @Column(nullable = false)
+    @Positive(message = "client Id cannot be negative or zero")
+    private Integer clientId;
+
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Target> targets;
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "budget_id") // Assuming the column name is budget_id
-    private Budget budget;
-    @NotNull(message = "clientID cannot be null")
-    @Positive(message = "clientID cannot be negative")
-    private Integer clientID;
-     
+    private List<Budget> budgets;
 }

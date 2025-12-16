@@ -1,53 +1,49 @@
 package com.budgetSystem.budget.Controller;
 
-
+import java.util.List;
+import com.budgetSystem.budget.dto.budget.BudgetResponse;
+import com.budgetSystem.budget.dto.budget.CreateBudgetRequest;
+import com.budgetSystem.budget.dto.budget.UpdateBudgetRequest;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.budgetSystem.budget.Model.Budget;
 import com.budgetSystem.budget.Service.BudgetService;
 
-import lombok.RequiredArgsConstructor;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("api/budgets")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@RequestMapping("/api/budgets")
 public class BudgetController {
+    private BudgetService budgetService;
 
-    private final BudgetService budgetService;
+    @PostMapping("/create")
+    public ResponseEntity<BudgetResponse> addBudget(@Valid @RequestBody CreateBudgetRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(budgetService.addBudget(request));
 
-    @PostMapping("/addBudget")
-    public ResponseEntity<?> addBudget(@Valid @RequestBody Budget budget)
-    {
-        budgetService.addBudget(budget);
-        return ResponseEntity.ok(new SuccessResponse());
     }
 
-    @GetMapping("/allBudgetsByClient")
-    public ResponseEntity<?> findAllBudgetsByClientID(@RequestParam int clientID)
-    {
-        return ResponseEntity.ok(new SuccessResponse(budgetService.findByClientID(clientID)));
+    @GetMapping("/findAll/{categoryId}")
+    public ResponseEntity<List<BudgetResponse>> getBudgetsbyCategoryId(@Valid @PathVariable Integer categoryId) {
+        return ResponseEntity.status(HttpStatus.OK).body(budgetService.getBudgetsByCategoryID(categoryId));
     }
 
-    @GetMapping("/monthlyBudget")
-    public ResponseEntity<?> findByMonthAndClientID(@RequestParam int month, @RequestParam int clientID)
-    {
-
-        return ResponseEntity.ok(new SuccessResponse(budgetService.findByMonthAndClientID(month, clientID)));
+    @DeleteMapping("/delete/{budgetId}")
+    public ResponseEntity<?> deleteBudget(@Valid @PathVariable Integer budgetId) {
+       budgetService.deleteBudget(budgetId);
+       return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/deleteBudget")
-    public ResponseEntity<?> deleteBudgetByClient(@RequestParam Integer clientID, @RequestParam Integer budgetID)
-    {
-        List<Budget> budgets = budgetService.deleteBudgetForClient(clientID,budgetID);
-        SuccessResponse successResponse = new SuccessResponse();
-        if (budgets.size() == 0)successResponse.setData("");
-        else successResponse.setData(budgets);
-        return ResponseEntity.ok(successResponse);
+    @PutMapping("/update")
+    public ResponseEntity<BudgetResponse> updateBudget(@Valid @RequestBody UpdateBudgetRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(budgetService.updateBudget(request));
     }
-     
+
+    @GetMapping("/find/{budgetId}")
+    public ResponseEntity<BudgetResponse> getBudget(@Valid @PathVariable Integer budgetId) {
+        return ResponseEntity.status(HttpStatus.OK).body(budgetService.getBudgetById(budgetId));
+    }
+
 
 }

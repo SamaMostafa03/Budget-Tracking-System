@@ -9,12 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "transaction-service",url = "${application.config.transactions-url}")
 public interface TransactionClient {
 
-   @GetMapping("/getinflow/{clientId}")
-   public double getInflowForUser(@PathVariable("clientId") int clientId);
-   
-   @GetMapping("/getoutflow/{targetId}")
-   public double getOutflowForUser(@PathVariable("targetId") int targetId);
-
 }
 
  

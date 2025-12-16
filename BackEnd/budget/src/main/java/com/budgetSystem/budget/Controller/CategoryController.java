@@ -1,6 +1,11 @@
 package com.budgetSystem.budget.Controller;
 
+import com.budgetSystem.budget.dto.budget.UpdateBudgetRequest;
+import com.budgetSystem.budget.dto.category.CategoryResponse;
+import com.budgetSystem.budget.dto.category.CreateCategoryReq;
+import com.budgetSystem.budget.dto.category.UpdateCategoryReq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,45 +23,40 @@ import com.budgetSystem.budget.Service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/category")
 @RequiredArgsConstructor
 public class CategoryController {
-    @Autowired
     private CategoryService categoryService;
-    SuccessResponse successResponse = new SuccessResponse();
 
-    @PostMapping("/addCategory")
-    public ResponseEntity<?> addCategory(@RequestBody Category category, @RequestParam Integer budgetId) {
-        categoryService.addCategory(budgetId, category);
-        return ResponseEntity.ok(successResponse);
+    @PostMapping("/create")
+    public ResponseEntity<CategoryResponse> addCategory(@Valid @RequestBody CreateCategoryReq req) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(categoryService.addCategory(req));
     }
 
-    @DeleteMapping("/deleteCategory")
-    public ResponseEntity<?> deleteCategory(@RequestParam Integer categoryId, @RequestParam Integer clientId) {
-        categoryService.deleteCategory(categoryId, clientId);
-        return ResponseEntity.ok(successResponse);
+    @DeleteMapping("/delete/{categoryId}")
+    public ResponseEntity<?> deleteCategory(@Valid @PathVariable Integer categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return ResponseEntity.noContent().build();
+
     }
 
-    @PutMapping("/updateCategory")
-    public ResponseEntity<?> updateCategoryName(
-            @Valid @RequestParam Integer clientId,
-            @Valid @RequestParam Integer categoryId,
-            @Valid @RequestParam String newName) {
-
-        return ResponseEntity.ok(new SuccessResponse(
-                categoryService.updateCategoryName(clientId, categoryId, newName)));
+    @PutMapping("/update")
+    public ResponseEntity<CategoryResponse> updateCategory(@Valid @RequestBody UpdateCategoryReq request) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.updateCategoryName(request));
     }
 
-    @GetMapping("/getcategory")
-    public ResponseEntity<?> getCategoryByClient(@Valid @RequestParam Integer clientId,
-            @Valid @RequestParam Integer categoryId) {
-        return ResponseEntity.ok(new SuccessResponse(categoryService.getCategoryById(clientId, categoryId)));
+    @GetMapping("/find/{categoryId}")
+    public ResponseEntity<CategoryResponse> getCategory(@Valid @PathVariable Integer categoryId) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.getCategoryById(categoryId));
     }
 
-    @GetMapping("/getcategoryByClient/{clientId}")
-    public ResponseEntity<?> getNumberOfAllCategoriesByClientID(@PathVariable Integer clientId) {
-        return ResponseEntity.ok(new SuccessResponse(categoryService.getNumberOfAllCategoriesByClientID(clientId)));
+    @GetMapping("/findAll/{clientId}")
+    public ResponseEntity<List<CategoryResponse>> getNumberOfAllCategoriesByClientID(@Valid @PathVariable Integer clientId) {
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.getAllCategoriesByClient(clientId));
     }
 
 }

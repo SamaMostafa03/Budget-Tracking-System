@@ -11,9 +11,6 @@ import com.budgetSystem.budget.Model.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
+    List<Category> findAllByClientId(Integer clientId);
 
-    Optional<Category> findByClientIDAndCategoryID(Integer clientID, Integer categoryID);
-
-    Category findByCategoryID(Integer categoryID);
-     List<Category> findAllByClientID(Integer clientID);
 }

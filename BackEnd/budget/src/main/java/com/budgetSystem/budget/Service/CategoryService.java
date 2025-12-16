@@ -3,79 +3,60 @@ package com.budgetSystem.budget.Service;
  
 import java.util.List;
 import java.util.Optional;
-import com.sama.exceptions.RecordNotFoundExecption;
+
+import com.budgetSystem.budget.dto.category.CategoryResponse;
+import com.budgetSystem.budget.dto.category.CreateCategoryReq;
+import com.budgetSystem.budget.dto.category.UpdateCategoryReq;
+import com.budgetSystem.budget.mapper.CategoryMapper;
+import com.sama.exceptions.RecordNotFoundException;
+import jakarta.ws.rs.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.budgetSystem.budget.Model.Budget;
 import com.budgetSystem.budget.Model.Category;
-import com.budgetSystem.budget.Model.Target;
 import com.budgetSystem.budget.Repository.BudgetRepository;
 import com.budgetSystem.budget.Repository.CategoryRepository;
-import com.budgetSystem.budget.Repository.TargetRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final BudgetRepository budgetRepository;
 
-    @Autowired
-    private BudgetRepository budgetRepository;
-    public void addCategory(Integer budgetId, Category category) {
-         
-        Optional<Budget> optionalBudget = budgetRepository.findById(budgetId);
-        if (optionalBudget.isPresent()) {
-            Budget budget = optionalBudget.get();
-            
-            // Associate the Budget with the Category
-            category.setBudget(budget);
-            
-            // Save the Category
-            categoryRepository.save(category);
-        } else {
-            // Handle case where the Budget with the given ID does not exist
-            throw new RecordNotFoundExecption(("Budget not found"));
-        }
+    public CategoryResponse addCategory(CreateCategoryReq dto) {
+        Category category = CategoryMapper.convertToEntity(dto);
+        categoryRepository.save(category);
+        return CategoryMapper.convertToResponse(category);
     }
 
 
-    public Category updateCategoryName(Integer clientId, Integer categoryId, String newName) {
-        Category category = getCategoryById(clientId, categoryId);
-        category.setCategoryName(newName);
-       return categoryRepository.save(category);
+    public CategoryResponse updateCategoryName(UpdateCategoryReq dto) {
+        Category category = categoryRepository.findById(dto.getCategoryID()).orElseThrow(() -> new RecordNotFoundException("Category not found"));
+        CategoryMapper.updateCategory(dto, category);
+       return CategoryMapper.convertToResponse(category);
     }
 
-    public Category getCategoryById(Integer clientId,Integer categoryId)
+    public CategoryResponse getCategoryById(Integer categoryId)
     {
-        Category category =  categoryRepository.findByClientIDAndCategoryID(clientId, categoryId)
-                .orElseThrow(() -> new RecordNotFoundExecption("Category not found"));
-        return category;
+        Category category =  categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RecordNotFoundException("Category not found"));
+        return CategoryMapper.convertToResponse(category);
     }
 
-    @Autowired
-    private TargetRepository targetRepository;
-
-    public void deleteCategory(Integer categoryId,Integer clientId)
+    public void deleteCategory(Integer clientId)
     {
-        Category category = categoryRepository.findById(categoryId).orElse(null);
-        if (category != null) {
-            if(category.getClientID().equals(clientId))
-            {
-                List<Target> targets = targetRepository.findByCategory(category);
-                targetRepository.deleteAll(targets);
-                categoryRepository.delete(category);
-                
-            }
-            throw new RecordNotFoundExecption(("client has no such category id"));
-        }
-        throw new RecordNotFoundExecption("Category not exist");
+        Category category = categoryRepository.findById(clientId).orElseThrow(() -> new RecordNotFoundException("Category not found"));
+        List<Budget> budgets = budgetRepository.findAllByCategoryId(category.getCategoryID());
+        budgetRepository.deleteAll(budgets);
+        categoryRepository.delete(category);
     }
-   public Integer getNumberOfAllCategoriesByClientID(Integer clientId)
+   public List<CategoryResponse> getAllCategoriesByClient(Integer clientId)
     {
-        List<Category> categories = categoryRepository.findAllByClientID(clientId);
-        return categories.size();
+        List<Category> categories = categoryRepository.findAllByClientId(clientId);
+        return categories.stream()
+                .map(CategoryMapper::convertToResponse)
+                .toList();
     }
 }
