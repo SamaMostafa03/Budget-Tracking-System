@@ -1,168 +1,55 @@
 package com.BudgetTracking.UserService.Model;
 
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-
-import jakarta.validation.constraints.Pattern;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
- 
+import lombok.*;
 
-@Table(name = "users") // Specify the new table name
+import java.time.LocalDate;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 @Entity
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-    @NotBlank(message = "Name is mandatory")
-    @Column(name = "name")
-    private String name;
-    @Column(name = "email", unique = true)
+    private int id;
+
+    @NotBlank(message = "Username is mandatory")
+    @Column(nullable = false)
+    private String username;
+
+    @Email
     @NotBlank(message = "Email is mandatory")
+    @Column(nullable = false, unique = true)
     private String email;
-    @Column(name = "password")
+
     private String password;
-    @Enumerated(value = EnumType.STRING)
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AuthProvider provider;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Token> tokens;
 
     private LocalDate registerDate;
-    private LocalDate loginDate;
 
-    @Column(name = "currency_type", columnDefinition = "VARCHAR(255) DEFAULT 'USD'")
-    @Pattern(regexp = "^(USD|EGP|EUR|GBP)$", message = "Currency type must be USD, EGP, EUR, or GBP")
-    private String CurrencyType;
+    private LocalDate lastLoginDate;
 
-    // getters and setters
-    public List<Token> getTokens() {
-        return tokens;
+    @PrePersist
+    protected void onCreate() {
+        this.registerDate = LocalDate.now();
+        this.lastLoginDate = LocalDate.now();
     }
 
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
-    }
-
-    public User(Integer id, String name, String email, String password, Role role) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.CurrencyType = "USD";
-    }
-
-    public User() {
-
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-    
-    public LocalDate getDate() {
-        return registerDate;
-    }
-
-    public void setDate(LocalDate date) {
-        this.registerDate = date;
-    }
-    
-    public LocalDate getLoginDate() {
-        return loginDate;
-    }
-
-    public void setLoginDate(LocalDate date) {
-        this.loginDate = date;
-    }
-    public void setCurrencyType(String currencyType) {
-        this.CurrencyType = currencyType;
-    }
-    public String getCurrencyType() {
-        return this.CurrencyType;
+    @PreUpdate
+    protected void onUpdate() {
+        this.lastLoginDate = LocalDate.now();
     }
 }

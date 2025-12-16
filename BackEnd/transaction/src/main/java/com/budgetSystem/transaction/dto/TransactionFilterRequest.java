@@ -1,4 +1,4 @@
-package com.budgetSystem.transaction;
+package com.budgetSystem.transaction.dto;
 
  
 import lombok.AllArgsConstructor;
@@ -13,11 +13,13 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionFilterRequestDTO {
+public class TransactionFilterRequest {
 
     private LocalDate startDate;
 
     private LocalDate endDate;
 
     private List<String> walletTypes;
+
+    private Integer clientId;
 }
