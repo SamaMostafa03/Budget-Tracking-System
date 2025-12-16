@@ -3,65 +3,79 @@
 • Budget Tracking System is a money management platform where users can track their income and expenses , 
 categorize their spending , and generate reports about their financial helath.
 
-• This repository provide a hands-on understanding microservices architecture using spring boot3 by 
-building CRUD APIs for the backend, implementing three microservices utilizing OpenFeign as an inter-service communication and applying some Spring Cloud technologies.
+• This repository demonstrates a real-world microservices architecture focusing on secure communication, secure API design, centralized configuration, clean separation of concerns and reusable Spring Boot starter modules.
 
-• Technologies used: Spring boot3, Spring Data JPA, API Gateway, Config Server, Discovery Server, REST client OpenFeign, PostgreSQL , Docker.
+• Technologies used: Spring boot3, Spring Security(JWT, OAuth2), Spring Data JPA, Spring Cloud (API Gateway, Config Server, Netflix Eureka, OpenFeign), PostgreSQL , Spring AOP, Docker.
 
-## Table of Contents
-- [Functional Requirements](#Functional-Requirements)
-- [Architecture Design](#Architecture-Design)
-- [UML Diagrams](#UML-Diagrams)
-- [Postman](#Postman)
-
-## Functional Requirements
-- Users can register and create accounts.
-- Users have full control on their budgets.
-- The system allows user to add income and expences transactions.
-- Users can track the spending progress of the targets they created.
-- Users can view the transaction history and filter transactions by wallet account.
-- The system offers basic reporting features (e.g., income vs. expenses by month) and filter by date or wallet account.
+## Key Features
+- Users can register and authenticate using email/password or Google OAuth2.
+- Secure access to APIs using JWT authentication.
+- Users can create and manage wallets.
+- Users can create categories (e.g. Bills, Loans).
+- Each category can contain multiple budgets (e.g. Rent, Water Bills).
+- Users can add income and expense transactions.
+- Users can track the spending progress of the budgets they created.
+- Automatic wallet and budget updates on each expense transaction.
+- Transaction history with filtering by date, wallet, or category.
+- Stateless microservices architecture with API Gateway and service discovery.
+- Centralized configuration management for all services.
+- Inter-service communication using OpenFeign.
+- Cross-cutting concerns extracted into reusable Spring Boot starter modules.
 
 ## Architecture Design
 ![Arch](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/Arch.png?raw=true)
 
+### Discovery Server
+
+Discovery Server provides service registration and discovery via “Spring Cloud Netflix Eureka.”, enabling seamless service-to-service communication within the microservices ecosystem.
+
 ### API Gateway
 
-The API Gateway serves as the single entry point for all user requests, managing and routing them to the appropriate microservices.
+API Gateway serves as the single entry point for all user requests, managing and routing them to the appropriate microservices.
 
 ### Config Server
 
-The Config Server centralizes configuration management for all microservices, simplifying application maintenance and consistency across environments.
-
-### Discovery Server
-
-The Discovery Server provides service registration and discovery via “Spring Cloud Netflix Eureka.”, enabling seamless service-to-service communication within the microservices ecosystem.
-
-### User Microservice
-
-The User Microservice is responsible for user management and authentication. 
-It ensures robust user authentication and administrative control over user accounts and system information.
-
-### Budget Microservice
-
-The Budget Microservice is responsible for managing
-financial targets-related data and operations such as creating, 
-updating, and deleting targets, while also tracking spend, 
-assignments, and total required funds for a given period of time.
-
-### Transaction Microservice
-
-The Transaction Microservice is responsible for managing transaction-related data and operations, such as adding, updating, and retrieving transactions records.
+Config Server centralizes configuration management for all microservices, simplifying application maintenance and consistency across environments.
 
 ### OpenFeign
+OpenFeign is a declarative REST client used for inter-service communication between: Transaction ↔ Wallet and Transaction ↔ budget
 
-This project demonstrates inter-service communication using OpenFeign, a declarative REST client that simplifies service-to-service communication within the microservices ecosystem.
+### User Microservice
+Responsible for:
+- User account management
+- Registration and authentication
+- JWT and refresh token generation
+- OAuth2 Google login
 
-## UML Diagrams
-- Use Case Diagram:
-![usecase](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/usecase.png?raw=true)
+### Budget Microservice
+Responsible for:
+- Category management
+- Budget creation and tracking
 
-- Class Diagram:
-![class](https://github.com/SamaMostafa03/Budget-Tracking-System/blob/main/Images/class.png?raw=true)
+### Wallet Microservice
+Responsible for:
+- Wallet creation and management for each user
+
+### Transaction Microservice
+Responsible for:
+- Recording income and expense transactions
+- Automatically updating wallet balances 
+- Automatically updating budget spending
+- Filtering transaction history.
+
+### Security & Authentication
+- JWT-based authentication for secured REST APIs
+- Refresh tokens for session continuity
+- Logout & token revocation
+- OAuth2 Google Login
+- JWT validation handled at API Gateway level
+
+### Cross-Cutting Concerns
+- Logging (execution time & exceptions)
+- Global exception handling
+- Shared DTOs
+These concerns are extracted into custom reusable Spring Boot starter modules and reused across all microservices.
 
 ## Postman
+[Postman-Collection-URL](https://www.postman.com/sama-03/budget-tracking-system/collection/apwbvc3/budget-tracking-system?action=share&creator=34266999)
+
