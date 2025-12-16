@@ -23,3 +23,6 @@ spring:
 application:
   config:
     transactions-url: http://localhost:8222/api/transaction
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 180000 # 3 minutes
