@@ -1,34 +1,42 @@
-package com.BudgetTracking.UserService.Service;
+package com.BudgetTracking.UserService.Model;
 
-import com.BudgetTracking.UserService.Model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
-public class UserPrincipal implements UserDetails {
+public class UserPrinciple implements UserDetails {
+    private final Collection<? extends GrantedAuthority> authorities;
+    private final Integer id;
+    private final String email;
+    private final String password;
 
-    private final User user;
+    public UserPrinciple(User user) {
 
-    public UserPrincipal(User user) {
-        this.user = user;
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
+        return authorities;
     }
+
+    public Integer getId(){return id;}
+    public String getEmail(){ return  email;}
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
@@ -51,4 +59,3 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 }
-
