@@ -1,11 +1,11 @@
 package com.budgetSystem.walletService;
 
 import com.budgetSystem.walletService.dto.CreateWalletRequest;
-import com.budgetSystem.walletService.dto.UpdateWalletRequest;
-import com.budgetSystem.walletService.dto.WalletResponse;
 import com.budgetSystem.walletService.model.Currency;
 import com.budgetSystem.walletService.model.Wallet;
 import com.budgetSystem.walletService.model.WalletType;
+import com.sama.wallet.UpdateWalletRequest;
+import com.sama.wallet.WalletResponse;
 
 public class WalletMapper {
     public static Wallet convertToEntity(CreateWalletRequest dto) {

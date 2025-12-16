@@ -1,10 +1,11 @@
 package com.budgetSystem.walletService;
 
 import com.budgetSystem.walletService.dto.CreateWalletRequest;
-import com.budgetSystem.walletService.dto.UpdateWalletRequest;
-import com.budgetSystem.walletService.dto.WalletResponse;
-import com.budgetSystem.walletService.exceptions.RecordNotFoundExecption;
 import com.budgetSystem.walletService.model.Wallet;
+import com.sama.exceptions.RecordNotFoundException;
+
+import com.sama.wallet.UpdateWalletRequest;
+import com.sama.wallet.WalletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,7 @@ public class WalletService {
     }
 
     public WalletResponse updateWallet(UpdateWalletRequest dto){
-        Wallet wallet = walletRepository.findById(dto.getId())
-                .orElseThrow( ()->new RecordNotFoundExecption("Wallet not found"));
+        Wallet wallet = walletRepository.findById(dto.getId()).orElseThrow( ()->new RecordNotFoundException("Wallet not found"));
         WalletMapper.updateEntity(dto, wallet);
         walletRepository.save(wallet);
         return WalletMapper.toResponce(wallet);
@@ -35,14 +35,13 @@ public class WalletService {
     }
 
     public WalletResponse findWallet(int walletId){
-        Wallet wallet = walletRepository.findById(walletId)
-                .orElseThrow( ()->new RecordNotFoundExecption("Wallet not found"));
+        Wallet wallet = walletRepository.findById(walletId).orElseThrow( ()->new RecordNotFoundException("Wallet not found"));
         return WalletMapper.toResponce(wallet);
     }
 
     public List<WalletResponse> findAllWalletsByClient(Integer clientId){
         List<Wallet> wallets = walletRepository.findAllByClientId(clientId);
-        if(wallets.isEmpty())throw new RecordNotFoundExecption("No wallets created yet");
+        if(wallets.isEmpty())throw new RecordNotFoundException("No wallets created yet");
         return wallets.stream()
                 .map(WalletMapper::toResponce)
                 .toList();
