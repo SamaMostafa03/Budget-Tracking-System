@@ -3,6 +3,7 @@ package com.BudgetTracking.UserService.Service;
 import com.BudgetTracking.UserService.Model.RefreshToken;
 import com.BudgetTracking.UserService.Model.User;
 import com.BudgetTracking.UserService.Repository.RefreshTokenRepo;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class RefreshTokenService {
     private final RefreshTokenRepo refreshTokenRepo;
 

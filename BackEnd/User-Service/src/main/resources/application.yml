@@ -1,20 +1,5 @@
 spring:
   application:
-    name: User-Service
+    name: users
   config:
     import: optional:configserver:http://localhost:8888
- 
-
-  
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/user_service
-    username: postgres
-    password: samaS1234
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-server:
-  port: 8999

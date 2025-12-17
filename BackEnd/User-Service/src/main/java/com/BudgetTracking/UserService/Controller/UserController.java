@@ -6,9 +6,9 @@ import com.BudgetTracking.UserService.DTO.RefreshTokenRequest;
 import com.BudgetTracking.UserService.DTO.RegisterRequest;
 import com.BudgetTracking.UserService.Model.RefreshToken;
 import com.BudgetTracking.UserService.Model.User;
-import com.BudgetTracking.UserService.Service.JwtService;
 import com.BudgetTracking.UserService.Service.RefreshTokenService;
 import com.BudgetTracking.UserService.Service.UserService;
+import com.sama.jwt.JwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -65,6 +66,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/oauth2/success")
+    public ResponseEntity<?> oauth2Success(@RequestParam String token) {
+        return ResponseEntity.ok(
+                Map.of(
+                        "accessToken", token,
+                        "message", "Google login successful"
+                )
+        );
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestBody RefreshTokenRequest request) {
 
@@ -78,14 +89,16 @@ public class UserController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(@RequestBody String refreshToken) {
-        RefreshToken token = refreshTokenService.findByToken(refreshToken)
+    public ResponseEntity<?> refresh(@RequestBody RefreshTokenRequest request) {
+        RefreshToken token = refreshTokenService.findByToken(request.getRefreshToken())
                 .orElseThrow(() -> new RuntimeException("Invalid refresh token"));
         if (token.getExpiryDate().isBefore(Instant.now())) {
             throw new RuntimeException("Refresh token expired");
         }
         // Generate a new access token
         String newAccessToken = jwtService.generateToken(token.getUser().getEmail());
-        return ResponseEntity.ok(newAccessToken);
+        return ResponseEntity.ok(
+                Map.of("accessToken", newAccessToken)
+        );
     }
 }

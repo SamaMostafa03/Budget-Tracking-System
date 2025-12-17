@@ -1,6 +1,6 @@
-package com.BudgetTracking.UserService.config;
+package com.budgetSystem.gateway.config;
 
-import com.BudgetTracking.UserService.Service.JwtService;
+import com.sama.jwt.JwtService;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -25,7 +25,7 @@ public class JwtAuthGatewayFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getURI().getPath();
 
-        if (path.startsWith("/api/auth") || path.startsWith("/oauth2")) {
+        if (path.startsWith("/api/auth") || path.startsWith("/oauth2") || path.startsWith("/login/oauth2")) {
             return chain.filter(exchange);
         }
 

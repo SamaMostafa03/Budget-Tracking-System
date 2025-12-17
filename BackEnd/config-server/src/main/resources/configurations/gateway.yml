@@ -6,6 +6,8 @@ server:
 spring:
   application:
     name: gateway
+  main:
+    web-application-type: reactive
   cloud:
     gateway:
       discovery:
@@ -16,14 +18,19 @@ spring:
           uri: http://localhost:8091
           predicates:
             - Path=/api/transaction/**
-        - id: user
-          uri: http://localhost:8999
-          predicates:
-            - Path=/**
         - id: budget
           uri: http://localhost:8070
           predicates:
-            - Path=/**
+            - Path=/api/budgets/** , /api/category/**
+        - id: wallet
+          uri: http://localhost:8092
+          predicates:
+            - Path=/api/wallet/**
+        - id: user
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/auth/**,/oauth2/**,/login/oauth2/**
+
   jwt:
     secret: ${JWT_SECRET}
     expiration: 180000 # 3 minutes

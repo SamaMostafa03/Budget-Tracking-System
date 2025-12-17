@@ -1,10 +1,11 @@
 package com.BudgetTracking.UserService.config;
 
-import com.BudgetTracking.UserService.Service.JwtService;
+import com.sama.jwt.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        String email = authentication.getName();
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        String email = oAuth2User.getAttribute("email");
         String token = jwtService.generateToken(email);
-        response.sendRedirect("http://localhost:8222/api/auth/login/success?token=" + token);
+        response.sendRedirect("http://localhost:8222/api/auth/oauth2/success?token=" + token);
     }
 }

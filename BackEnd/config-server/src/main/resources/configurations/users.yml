@@ -12,7 +12,7 @@ spring:
     name: User-Service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/user_budget_system
+    url: jdbc:postgresql://localhost:5432/user_budget
     username: postgres
     password: samaS1234
   jpa:
