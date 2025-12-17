@@ -39,7 +39,7 @@ public class BudgetService {
     }
 
     public List<BudgetResponse> getBudgetsByCategoryID(Integer categoryId) {
-        List<Budget> budgets = budgetRepository.findAllByCategoryId(categoryId);
+        List<Budget> budgets = budgetRepository.findAllByCategory_CategoryID(categoryId);
         if (budgets.isEmpty()) throw new RecordNotFoundException("No budgets made yet by the client");
         return budgets.stream().map(BudgetMapper::convertToResponse).toList();
     }

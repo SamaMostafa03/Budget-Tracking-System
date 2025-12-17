@@ -107,7 +107,7 @@ public class TransactionService {
                 .map(WalletResponse::getId)
                 .toList();
 
-        List<Transaction> filteredTransactions = repository.findByClientIdAndWalletIdAndTransactionDateBetween(clientId,walletsId,startDate,endDate);
+        List<Transaction> filteredTransactions = repository.findByClientIdAndWalletIdInAndTransactionDateBetween(clientId,walletsId,startDate,endDate);
         if (filteredTransactions.isEmpty()) throw new RecordNotFoundException("No transactions found within the filter search");
         return filteredTransactions.stream()
                 .map(TransactionMapper::convertToResponce)

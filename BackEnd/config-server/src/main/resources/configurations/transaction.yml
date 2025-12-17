@@ -12,7 +12,7 @@ spring:
     name: transaction
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/transactions
+    url: jdbc:postgresql://localhost:5432/transactions-budget
     username: postgres
     password: samaS1234
   jpa:
@@ -23,3 +23,8 @@ spring:
   jwt:
     secret: ${JWT_SECRET}
     expiration: 180000 # 3 minutes
+application:
+    config:
+      budget-url: http://localhost:8222/api/budget
+      wallet-url: http://localhost:8222/api/wallet
+

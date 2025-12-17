@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.budgetSystem.budget.Model.Budget;
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget, Integer> {
-    List<Budget> findAllByCategoryId(Integer categoryId);
+    List<Budget> findAllByCategory_CategoryID(Integer categoryID);
 
 }

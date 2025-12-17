@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     List<Transaction> findAllByClientId(Integer clientId);
-    List<Transaction> findByClientIdAndWalletIdAndTransactionDateBetween(
+    List<Transaction> findByClientIdAndWalletIdInAndTransactionDateBetween(
             Integer clientId, List<Integer> walletId,
             LocalDate starDate, LocalDate endDate);
 

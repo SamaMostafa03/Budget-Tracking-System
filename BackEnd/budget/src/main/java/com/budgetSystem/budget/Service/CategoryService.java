@@ -48,7 +48,7 @@ public class CategoryService {
     public void deleteCategory(Integer clientId)
     {
         Category category = categoryRepository.findById(clientId).orElseThrow(() -> new RecordNotFoundException("Category not found"));
-        List<Budget> budgets = budgetRepository.findAllByCategoryId(category.getCategoryID());
+        List<Budget> budgets = budgetRepository.findAllByCategory_CategoryID(category.getCategoryID());
         budgetRepository.deleteAll(budgets);
         categoryRepository.delete(category);
     }
